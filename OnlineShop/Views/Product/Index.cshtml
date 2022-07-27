@@ -1,0 +1,124 @@
+﻿@model PagedList.IPagedList<OnlineShop.Models.Product>
+@using PagedList.Mvc;
+@using PagedList;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<script src="~/Theme/search.js"></script>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+<div class="container pb-5">
+    <h2>New Product</h2>
+    <hr />
+    <p>
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+    <hr />
+    @using (Html.BeginForm("Index", "Product", FormMethod.Post))
+    {
+
+        <div class="input-group">
+            <div class="form-outline">
+                @Html.TextBox("SearchString", null, new { @class = "form-control", placeholder = "Search" })
+
+
+            </div>
+            <button type="submit" class="btn btn-outline-info">
+                <i class="fas fa-search"></i>
+                Search
+            </button>
+        </div>
+        <br />
+
+        @*<p>
+                Find by name: @Html.TextBox("SearchString")
+                <input type="submit" value="Search" />
+            </p>*@
+    }
+
+    <table class="table table-bordered table-striped">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.First().Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Category.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().isHome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().IsApproved)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    <img src="@Url.Content(item.Image)" width="70" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+
+                <td>
+                    @if (item.isHome)
+                    {
+
+
+                        <label class="badge badge-success">
+                            <i class="fa fa-check-square" aria-hidden="true"></i>
+                            Yes
+                        </label>
+                    }
+                    else
+                    {
+                        <label class=" badge badge-danger">
+                            <i class="fa fa-check-square" aria-hidden="true"></i>
+                            No
+                        </label>
+                    }
+                </td>
+                <td>
+                    @if (item.IsApproved)
+                    {
+
+
+                        <label class="badge badge-success">
+                            <i class="fa fa-check-square" aria-hidden="true"></i>
+                            Yes
+                        </label>
+                    }
+                    else
+                    {
+                        <label class=" badge badge-danger">
+                            <i class="fa fa-check-square" aria-hidden="true"></i>
+                            No
+                        </label>
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+
+    </table>
+    <br />
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+</div>

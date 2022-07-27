@@ -1,0 +1,34 @@
+﻿@using OnlineShop.ViewModel
+@model IEnumerable<ProductModel>
+
+<div class="row">
+
+    @foreach (var product in Model)
+    {
+        <div class="col-md-4">
+
+            <div class="card">
+                <img class="card-img-top" src="@Url.Content(product.Image)" alt="@product.Name">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="/Home/Details/@product.Id">@product.Name</a>
+                    </h5>
+                    <p class="card-text pt-2 description">
+                        @product.Description
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted product-price">
+                        <i class="fa fa-usd" aria-hidden="true"></i>
+                        @product.Price
+                    </small>
+                    <a href="/Home/Details/@product.Id" class="btn btn-primary btn-sm float-right">
+                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                        Характеристики
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

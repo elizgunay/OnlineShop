@@ -1,0 +1,38 @@
+﻿@using OnlineShop.ViewModel
+@model IEnumerable<ProductModel>
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container pb-5">
+    <div class="row">
+
+        <div class="col-md-3">
+            @Html.Action("GetCategories", "Home")
+        </div>
+        <div class="col-md-9">
+
+            @if (Model.Count() == 0)
+            {
+
+                <div class="alert alert-warning" role="alert">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    No products were found in this categoryk
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning" role="alert">
+                    <i class="fa fa-check-square" aria-hidden="true"></i>
+                    @Model.Count() product is found
+                </div>
+
+            }
+
+            @Html.Partial("_ProductList", Model)
+
+        </div>
+    </div>
+</div>
+
